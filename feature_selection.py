@@ -1,8 +1,8 @@
 import pandas as pd
 
 def extract_features(file, feature_list:list):
-    feature_list_mean = map(lambda feature: feature + "_mean1234", feature_list)
-    data = pd.read_csv("UNSW_NB15_training-set_normalized.csv")
+    feature_list_mean = map(lambda feature: feature + "_mean", feature_list)
+    data = pd.read_csv(file)
 
     # Step 1: Separate the data into groups based on attack categories
     attack_groups = data.groupby("attack_cat")
@@ -18,3 +18,7 @@ def extract_features(file, feature_list:list):
 
     # Return the feature vectors
     return feature_vectors_df
+
+def get_test_attacks(file, feature_list:list):
+    df = pd.read_csv(file)
+    return df[feature_list + ['attack_cat']].values.tolist()
